@@ -4,15 +4,36 @@
  */
 
 export interface GenesisBlockConfig {
+    /**
+     * Enable verbose logging
+     */
     verbose?: boolean;
+    /**
+     * Timeout in milliseconds for the execution
+     */
     timeout?: number;
+    /**
+     * Maximum number of retries
+     */
     maxRetries?: number;
 }
 
 export interface ProcessResult {
+    /**
+     * Success status of the processing
+     */
     success: boolean;
+    /**
+     * Data produced by the processing
+     */
     data?: any;
+    /**
+     * Message describing the result
+     */
     message: string;
+    /**
+     * Timestamp of the result
+     */
     timestamp: Date;
 }
 
@@ -20,6 +41,10 @@ export class GenesisBlock {
     private config: GenesisBlockConfig;
     private processed: number = 0;
 
+    /**
+     * Constructor for GenesisBlock
+     * @param config Configuration options
+     */
     constructor(config: GenesisBlockConfig = {}) {
         this.config = {
             verbose: false,
@@ -29,6 +54,10 @@ export class GenesisBlock {
         };
     }
 
+    /**
+     * Execute the GenesisBlock processor
+     * @returns Process result
+     */
     async execute(): Promise<ProcessResult> {
         const startTime = Date.now();
         
@@ -63,6 +92,10 @@ export class GenesisBlock {
         }
     }
 
+    /**
+     * Perform the core processing logic
+     * @returns Processing result
+     */
     private async process(): Promise<any> {
         // Implement your core logic here
         await this.delay(100); // Simulate processing
@@ -76,14 +109,12 @@ export class GenesisBlock {
         };
     }
 
-    private delay(ms: number): Promise<void> {
+    /**
+     * Simulate a delay in processing
+     * @param ms Delay in milliseconds
+     * @returns Promise resolving after the delay
+     */
+    private async delay(ms: number): Promise<void> {
         return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    getStatistics(): object {
-        return {
-            processed: this.processed,
-            config: this.config
-        };
     }
 }
